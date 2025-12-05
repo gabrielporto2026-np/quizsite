@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Sistema de Quizzes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>Quiz Master</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Início</a></li>
+                        <li><a href="#" class="nav-link" data-page="play"><i class="fas fa-gamepad"></i> Jogar</a></li>
+                        <li><a href="#" class="nav-link" data-page="create"><i class="fas fa-plus-circle"></i> Criar Quiz</a></li>
+                        <li><a href="#" class="nav-link" data-page="my-quizzes"><i class="fas fa-list"></i> Meus Quizzes</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Página inicial -->
+            <section id="home" class="page active">
+                <h2 class="page-title"><i class="fas fa-home"></i> Início</h2>
+                <div class="welcome-section">
+                    <div class="welcome-card">
+                        <h3>Bem-vindo ao Quiz Master!</h3>
+                        <p>Crie e jogue quizzes divertidos sobre os mais variados temas.</p>
+                        <p>Teste seus conhecimentos ou desafie seus amigos!</p>
+                    </div>
+                    
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-quizzes">0</h3>
+                                <p>Quizzes Criados</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-plays">0</h3>
+                                <p>Partidas Jogadas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avg-score">0%</h3>
+                                <p>Média de Acertos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="section-title">Quizzes Disponíveis</h3>
+                <div id="quizzes-list" class="cards-container">
+                    <!-- Lista de quizzes será carregada aqui -->
+                </div>
+            </section>
+
+            <!-- Página de jogar -->
+            <section id="play" class="page">
+                <h2 class="page-title"><i class="fas fa-gamepad"></i> Jogar Quiz</h2>
+                
+                <div id="quiz-selection">
+                    <p>Escolha um quiz para jogar:</p>
+                    <div id="play-quizzes-list" class="cards-container">
+                        <!-- Lista de quizzes para jogar será carregada aqui -->
+                    </div>
+                </div>
+                
+                <div id="quiz-game" style="display: none;">
+                    <div class="quiz-header">
+                        <h3 id="quiz-title">Título do Quiz</h3>
+                        <div class="quiz-info">
+                            <span id="current-question">Pergunta 1 de 5</span>
+                            <span id="quiz-timer">Tempo: 00:00</span>
+                            <span id="quiz-score">Pontuação: 0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-content">
+                        <div id="question-container">
+                            <h4 id="question-text">Texto da pergunta</h4>
+                            <div id="options-container" class="options-grid">
+                                <!-- Opções serão carregadas aqui -->
+                            </div>
+                        </div>
+                        
+                        <div id="result-container" style="display: none;">
+                            <h3 id="result-title">Resultado</h3>
+                            <div class="result-info">
+                                <p>Você acertou <span id="correct-answers">0</span> de <span id="total-questions">0</span> perguntas</p>
+                                <p>Sua pontuação: <span id="final-score">0</span> pontos</p>
+                                <div class="score-bar">
+                                    <div id="score-fill" class="score-fill"></div>
+                                </div>
+                            </div>
+                            <div class="result-actions">
+                                <button id="play-again-btn" class="btn btn-primary"><i class="fas fa-redo"></i> Jogar Novamente</button>
+                                <button id="back-to-quizzes-btn" class="btn btn-warning"><i class="fas fa-list"></i> Voltar para Quizzes</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-actions">
+                        <button id="prev-question-btn" class="btn" disabled><i class="fas fa-arrow-left"></i> Anterior</button>
+                        <button id="next-question-btn" class="btn btn-primary">Próxima <i class="fas fa-arrow-right"></i></button>
+                        <button id="submit-quiz-btn" class="btn btn-success" style="display: none;"><i class="fas fa-check"></i> Finalizar Quiz</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Página de criar quiz -->
+            <section id="create" class="page">
+                <h2 class="page-title"><i class="fas fa-plus-circle"></i> Criar Novo Quiz</h2>
+                
+                <div class="form-container">
+                    <form id="create-quiz-form">
+                        <div class="form-group">
+                            <label for="quiz-name"><i class="fas fa-heading"></i> Nome do Quiz</label>
+                            <input type="text" id="quiz-name" placeholder="Ex: Conhecimentos Gerais" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quiz-description"><i class="fas fa-align-left"></i> Descrição</label>
+                            <textarea id="quiz-description" placeholder="Descreva o tema do seu quiz" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quiz-category"><i class="fas fa-tag"></i> Categoria</label>
+                            <select id="quiz-category">
+                                <option value="conhecimentos-gerais">Conhecimentos Gerais</option>
+                                <option value="ciencia">Ciência</option>
+                                <option value="historia">História</option>
+                                <option value="geografia">Geografia</option>
+                                <option value="esportes">Esportes</option>
+                                <option value="entretenimento">Entretenimento</option>
+                                <option value="tecnologia">Tecnologia</option>
+                                <option value="outros">Outros</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-question-circle"></i> Perguntas</label>
+                            <div id="questions-container">
+                                <!-- Perguntas serão adicionadas aqui -->
+                            </div>
+                            <button type="button" id="add-question-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar Pergunta</button>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar Quiz</button>
+                            <button type="button" id="reset-form-btn" class="btn btn-danger"><i class="fas fa-trash"></i> Limpar Formulário</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Página de meus quizzes -->
+            <section id="my-quizzes" class="page">
+                <h2 class="page-title"><i class="fas fa-list"></i> Meus Quizzes</h2>
+                
+                <div id="my-quizzes-container" class="cards-container">
+                    <!-- Meus quizzes serão carregados aqui -->
+                </div>
+                
+                <div id="no-quizzes-message" style="text-align: center; padding: 40px; display: none;">
+                    <i class="fas fa-clipboard-list" style="font-size: 60px; color: #ccc; margin-bottom: 20px;"></i>
+                    <h3>Você ainda não criou nenhum quiz</h3>
+                    <p>Vá para a página "Criar Quiz" para começar a criar seus próprios quizzes!</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Quiz Master &copy; <span id="current-year">2023</span> - Sistema de Quizzes Interativo</p>
+            <p>Desenvolvido com HTML, CSS e JavaScript puro</p>
+        </div>
+    </footer>
+
+    <!-- Modal para editar/excluir quiz -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Gerenciar Quiz</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="modal-quiz-name"></p>
+                <div class="modal-actions">
+                    <button id="edit-quiz-btn" class="btn btn-primary"><i class="fas fa-edit"></i> Editar</button>
+                    <button id="delete-quiz-btn" class="btn btn-danger"><i class="fas fa-trash"></i> Excluir</button>
+                    <button id="play-quiz-btn" class="btn btn-success"><i class="fas fa-play"></i> Jogar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
